@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="ChatFlow - A modern frontend real-time chat application"
+    >
+
+    <title>ChatFlow — Real-Time Chat App</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <!-- =========================
+             TOP BAR
+        ========================== -->
+        <header class="topbar">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    💬
+                </div>
+
+                <div>
+                    <h1>ChatFlow</h1>
+                    <p>Modern frontend chat experience</p>
+                </div>
+
+            </div>
+
+            <div class="top-actions">
+
+                <button
+                    class="icon-btn"
+                    id="themeBtn"
+                    title="Toggle theme"
+                    aria-label="Toggle theme"
+                >
+                    🌙
+                </button>
+
+                <button
+                    class="icon-btn"
+                    id="clearBtn"
+                    title="Clear chat"
+                    aria-label="Clear chat"
+                >
+                    🗑️
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =========================
+             MAIN CHAT CARD
+        ========================== -->
+        <main class="chat-card">
+
+
+            <!-- =========================
+                 SIDEBAR
+            ========================== -->
+            <aside class="chat-sidebar">
+
+                <div class="sidebar-head">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            MESSAGING
+                        </span>
+
+                        <h2>
+                            Conversations
+                        </h2>
+
+                    </div>
+
+                    <span
+                        class="online-dot"
+                        title="Online"
+                    ></span>
+
+                </div>
+
+
+                <!-- Search -->
+                <label class="search-box">
+
+                    <span>⌕</span>
+
+                    <input
+                        id="searchInput"
+                        type="search"
+                        placeholder="Search messages..."
+                        autocomplete="off"
+                    >
+
+                </label>
+
+
+                <!-- User Profile -->
+                <div class="profile-card">
+
+                    <div class="avatar large">
+                        MS
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Muhammad Siddique
+                        </strong>
+
+                        <span>
+                            <i></i>
+                            Active now
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="mini-action"
+                        id="profileBtn"
+                        title="Profile"
+                    >
+                        ⋮
+                    </button>
+
+                </div>
+
+
+                <!-- Conversation -->
+                <div class="conversation active">
+
+                    <div class="avatar">
+                        CF
+                    </div>
+
+                    <div class="conversation-info">
+
+                        <strong>
+                            ChatFlow Assistant
+                        </strong>
+
+                        <span id="sidebarPreview">
+                            Welcome! Send me a message.
+                        </span>
+
+                    </div>
+
+                    <span class="unread">
+                        AI
+                    </span>
+
+                </div>
+
+
+                <!-- Sidebar Tip -->
+                <div class="sidebar-tip">
+
+                    <span>
+                        ✨
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Frontend challenge
+                        </strong>
+
+                        <p>
+                            Messages are stored in your browser with localStorage.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+
+            <!-- =========================
+                 CHAT PANEL
+            ========================== -->
+            <section class="chat-panel">
+
+
+                <!-- Chat Header -->
+                <div class="chat-header">
+
+                    <div class="contact">
+
+                        <div class="avatar assistant-avatar">
+
+                            <span>
+                                🤖
+                            </span>
+
+                            <i class="status-ring"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                ChatFlow Assistant
+                            </h2>
+
+                            <p id="presenceText">
+                                Online · replies instantly
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="header-actions">
+
+                        <button
+                            class="icon-btn"
+                            id="soundBtn"
+                            title="Toggle sounds"
+                            aria-label="Toggle sounds"
+                        >
+                            🔔
+                        </button>
+
+                        <button
+                            class="icon-btn"
+                            id="infoBtn"
+                            title="Chat information"
+                            aria-label="Chat information"
+                        >
+                            ⓘ
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     CHAT CONTENT
+                ========================== -->
+                <div class="chat-content">
+
+                    <div class="date-divider">
+                        <span>
+                            Today
+                        </span>
+                    </div>
+
+
+                    <!-- Messages -->
+                    <div
+                        class="messages"
+                        id="messages"
+                        aria-live="polite"
+                    ></div>
+
+
+                    <!-- Typing Indicator -->
+                    <div
+                        class="typing"
+                        id="typingIndicator"
+                        hidden
+                    >
+
+                        <div class="avatar small">
+                            CF
+                        </div>
+
+                        <div class="typing-bubble">
+
+                            <span></span>
+                            <span></span>
+                            <span></span>
+
+                            <em>
+                                Assistant is typing
+                            </em>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Quick Replies -->
+                    <div
+                        class="quick-replies"
+                        id="quickReplies"
+                    >
+
+                        <button data-message="Hello! 👋">
+                            Say hello
+                        </button>
+
+                        <button data-message="What can you do?">
+                            What can you do?
+                        </button>
+
+                        <button data-message="Show me a tip">
+                            Give me a tip
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     MESSAGE COMPOSER
+                ========================== -->
+                <form
+                    class="composer"
+                    id="chatForm"
+                >
+
+                    <div class="composer-tools">
+
+                        <button
+                            type="button"
+                            class="tool-btn"
+                            id="emojiBtn"
+                            title="Emoji"
+                        >
+                            ☺
+                        </button>
+
+                        <button
+                            type="button"
+                            class="tool-btn"
+                            id="attachBtn"
+                            title="Attachment"
+                        >
+                            ＋
+                        </button>
+
+                    </div>
+
+
+                    <div class="input-wrap">
+
+                        <textarea
+                            id="messageInput"
+                            rows="1"
+                            maxlength="500"
+                            placeholder="Write a message..."
+                            aria-label="Message"
+                        ></textarea>
+
+
+                        <!-- Emoji Panel -->
+                        <div
+                            class="emoji-panel"
+                            id="emojiPanel"
+                        >
+
+                            <button type="button">😀</button>
+                            <button type="button">😂</button>
+                            <button type="button">😍</button>
+                            <button type="button">👍</button>
+                            <button type="button">🔥</button>
+                            <button type="button">🎉</button>
+                            <button type="button">❤️</button>
+                            <button type="button">🚀</button>
+                            <button type="button">✨</button>
+                            <button type="button">🤝</button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="send-btn"
+                        type="submit"
+                        aria-label="Send message"
+                    >
+
+                        <span>
+                            Send
+                        </span>
+
+                        <span>
+                            ➤
+                        </span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- Composer Footer -->
+                <div class="composer-footer">
+
+                    <span id="charCount">
+                        0 / 500
+                    </span>
+
+                    <span>
+                        Press
+                        <kbd>Enter</kbd>
+                        to send ·
+                        <kbd>Shift + Enter</kbd>
+                        for a new line
+                    </span>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================
+         TOAST
+    ========================== -->
+    <div
+        class="toast"
+        id="toast"
+        role="status"
+    ></div>
+
+
+    <!-- =========================
+         INFORMATION MODAL
+    ========================== -->
+    <div
+        class="modal"
+        id="infoModal"
+        aria-hidden="true"
+    >
+
+        <div class="modal-card">
+
+            <button
+                class="modal-close"
+                id="modalClose"
+            >
+                ×
+            </button>
+
+            <div class="modal-icon">
+                💬
+            </div>
+
+            <h2>
+                Chat Information
+            </h2>
+
+            <p>
+                This is a frontend-only real-time chat simulation.
+            </p>
+
+            <div class="info-grid">
+
+                <div>
+                    <strong>
+                        Storage
+                    </strong>
+
+                    <span>
+                        localStorage
+                    </span>
+                </div>
+
+                <div>
+                    <strong>
+                        Messages
+                    </strong>
+
+                    <span id="messageCount">
+                        0
+                    </span>
+                </div>
+
+                <div>
+                    <strong>
+                        Status
+                    </strong>
+
+                    <span>
+                        Online
+                    </span>
+                </div>
+
+                <div>
+                    <strong>
+                        Mode
+                    </strong>
+
+                    <span id="modeText">
+                        Light
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- File Input -->
+    <input
+        type="file"
+        id="fileInput"
+        hidden
+    >
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
